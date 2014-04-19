@@ -20,3 +20,6 @@ qtcAddDeployment()
 HEADERS += \
     database.h \
     dbman.h
+
+OTHER_FILES += \
+    qml/optoman/component/EyeReel.qml
