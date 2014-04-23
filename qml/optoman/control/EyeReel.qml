@@ -111,6 +111,7 @@ Item {
             height: container.atIconHeight
             smooth: true
             source: "gfx/atIcon.png"
+            fillMode: Image.PreserveAspectFit
             anchors.verticalCenter: parent.verticalCenter
         }
 
