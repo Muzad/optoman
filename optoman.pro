@@ -1,3 +1,4 @@
+QT += sql
 # Add more folders to ship with the application, here
 folder_01.source = qml/optoman
 folder_01.target = qml
@@ -18,7 +19,6 @@ include(qtquick2applicationviewer/qtquick2applicationviewer.pri)
 qtcAddDeployment()
 
 HEADERS += \
-    database.h \
     dbman.h
 
 OTHER_FILES += \

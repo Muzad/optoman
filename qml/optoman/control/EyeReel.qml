@@ -15,6 +15,11 @@ Item {
     // Spacing between items
     property int spacing: width / 35
 
+    property string sphValue
+    property string cylValue
+    property string axValue
+
+
     property Component itemBackground: Component {
         BorderImage {
             border { top: 8; bottom: 8; left: 8; right: 8 }
@@ -40,6 +45,7 @@ Item {
     Component {
         id: sphDelegate
         Button {
+            id:sphb
             width: container.w
             height: container.h
             text: number
@@ -48,7 +54,7 @@ Item {
             fontSize: container.fontSize
             bg: itemBackground
             bgPressed: itemBackgroundPressed
-            onClicked: { sphReel.index = index; sphReel.toggle() }
+            onClicked: { sphReel.index = index; sphReel.toggle(); console.log(sphb.text)}//container.sphValue = text }
         }
     }
 
@@ -63,7 +69,7 @@ Item {
             fontSize: container.fontSize
             bg: itemBackground
             bgPressed: itemBackgroundPressed
-            onClicked: { cylReel.index = index; cylReel.toggle() }
+            onClicked: { cylReel.index = index; cylReel.toggle(); container.cylValue = text }
         }
     }
 
@@ -78,7 +84,7 @@ Item {
             fontSize: container.fontSize
             bg: itemBackground
             bgPressed: itemBackgroundPressed
-            onClicked: { axReel.index = index; axReel.toggle() }
+            onClicked: { axReel.index = index; axReel.toggle(); container.axValue = number }
         }
     }
     Row {
@@ -93,6 +99,9 @@ Item {
             model: sphModel
             delegate: sphDelegate
             autoClose: true
+            onIndexChanged: {
+                container.sphValue = sphModel.get(index).number
+            }
         }
 
         Reel {
@@ -102,6 +111,9 @@ Item {
             model: cylModel
             delegate: cylDelegate
             autoClose: true
+            onIndexChanged: {
+                container.cylValue = cylModel.get(index).number
+            }
 
         }
 
@@ -122,6 +134,9 @@ Item {
             model: axModel
             delegate:  axDelegate
             autoClose: true
+            onIndexChanged: {
+                container.axValue = axModel.get(index).number
+            }
         }
     }
 

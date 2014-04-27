@@ -48,7 +48,10 @@ Item {
             source: "img/done.png"
             MouseArea {
                 anchors.fill: parent
-                onClicked: root.state = ""
+                onClicked: {
+                    DBMAN.addInfo( "8888", customerName.text, customerPhone.text, leftEyeReel.sphValue, leftEyeReel.cylValue, leftEyeReel.axValue, rightEyeReel.sphValue, rightEyeReel.cylValue, rightEyeReel.axValue, "lensType", detailArea.text, false)
+                    root.state = ""
+                }
             }
         }
     }
@@ -195,6 +198,7 @@ Item {
         }
 
         TextArea {
+            id: detailArea
             width: parent.width
             height: parent.height / 4
         }
