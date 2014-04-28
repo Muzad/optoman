@@ -6,6 +6,20 @@ Rectangle {
     height: 550
     color: "lightblue"
 
+    ListView {
+        anchors.fill: parent
+        model: patientmodel
+
+        delegate: Rectangle {
+            Text {
+                anchors.fill: parent
+                text: name +" : "+ phone
+            }
+
+            color:"lightgreen"; width: parent.width; height: 30; border.width: 3
+        }
+    }
+
     Rectangle {
         id: addButton
         anchors.bottom: parent.bottom

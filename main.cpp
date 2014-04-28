@@ -13,8 +13,14 @@ int main(int argc, char *argv[])
     currentDir.mkdir ("data");
 
     DbMan dbmanager;
+
+//    dbmanager.reloadModel();
+
     QtQuick2ApplicationViewer viewer;
+    dbmanager.setGlobalViewer(&viewer);
     viewer.rootContext()->setContextProperty("DBMAN",&dbmanager);
+    viewer.rootContext()->setContextProperty("patientmodel",dbmanager.model());
+
     viewer.setMainQmlFile(QStringLiteral("qml/optoman/main.qml"));
     viewer.showExpanded();
 
