@@ -36,7 +36,10 @@ Item {
             source: "img/back.png"
             MouseArea {
                 anchors.fill: parent
-                onClicked: root.state = ""
+                onClicked: {
+                    DBMAN.reloadModel()
+                    root.state = ""
+                }
             }
         }
         Image {
@@ -50,6 +53,7 @@ Item {
                 anchors.fill: parent
                 onClicked: {
                     DBMAN.addInfo( "8888", customerName.text, customerPhone.text, leftEyeReel.sphValue, leftEyeReel.cylValue, leftEyeReel.axValue, rightEyeReel.sphValue, rightEyeReel.cylValue, rightEyeReel.axValue, "lensType", detailArea.text, false)
+                    DBMAN.reloadModel()
                     root.state = ""
                 }
             }
