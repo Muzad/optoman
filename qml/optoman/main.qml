@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.1
 
 Rectangle {
     id: root
@@ -7,29 +7,43 @@ Rectangle {
     color: "lightblue"
 
     ListView {
+        id: mainView
         anchors.fill: parent
+        property int w: parent.width
+        property int h: parent.height / 7
         model: patientmodel
+        delegate: PatientInfoDelegate {
+            width: mainView.w
+            height: mainView.h
 
-        delegate: Rectangle {
-            Text {
-                anchors.fill: parent
-                text: name +" : "+ phone
-            }
-
-            color:"lightgreen"; width: parent.width; height: 30; border.width: 3
+            nameText: name
+            phoneText: phone
+            leftEyeText: leftEyeSph + " " + leftEyeCyl + " @" + leftEyeAx
+            rightEyeText: rightEyeSph + " " + rightEyeCyl + " @" + rightEyeAx
+            lensTypeText: lensType
+            detailText: detail
         }
+
     }
 
-    Rectangle {
+    Item {
         id: addButton
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         width: parent.width / 4
-        height: parent.height / 8
-        color: "black"
+        height: width
+        Image {
+            anchors.fill: parent
+            source: "img/up.png"
+            smooth: true
+        }
+
         MouseArea {
             anchors.fill: parent
-            onClicked: root.state = "ADDSTATE"
+            onClicked: {
+                addpage.clear()
+                root.state = "ADDSTATE"
+            }
         }
     }
 

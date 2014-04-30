@@ -24,4 +24,7 @@ HEADERS += \
     patientsqlmodel.h
 
 OTHER_FILES += \
-    qml/optoman/component/EyeReel.qml
+    qml/optoman/component/EyeReel.qml \
+    android/AndroidManifest.xml
+
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android

@@ -42,6 +42,13 @@ Item {
         axReel.index = axModel.start
     }
 
+    function clear()
+    {
+        sphReel.index = sphModel.start
+        cylReel.index = cylModel.start
+        axReel.index = axModel.start
+    }
+
     Component {
         id: sphDelegate
         Button {

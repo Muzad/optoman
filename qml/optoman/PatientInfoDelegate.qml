@@ -1,17 +1,15 @@
-import QtQuick 2.0
+import QtQuick 2.1
 
-Rectangle {
-    width: 500
-    height: 102
+Image {
+    source: "img/itemBack.png"
+    property alias nameText: namePlaceText.text
+    property alias phoneText: phonePlaceText.text
+    property alias leftEyeText: leftEyePlaceText.text
+    property alias rightEyeText: rightEyePlaceText.text
+    property alias lensTypeText: lensTypePlaceText.text
+    property alias detailText: detailPlaceText.text
 
-    property alias name: namePlaceText.text
-    property alias phone: phonePlaceText.text
-    property alias leftEye: leftEyePlaceText.text
-    property alias rightEye: rightEyePlaceText.text
-    property alias lensType: lensTypePlaceText.text
-    property alias detail: detailPlaceText.text
-
-    Rectangle {
+    Item {
         id: patientPersonalInfoPlace
         anchors {
             left: parent.left
@@ -19,9 +17,8 @@ Rectangle {
             top: parent.top
         }
         height: parent.height / 4
-        color: "#ab3636"
 
-        Rectangle {
+        Item {
             id: namePlace
             anchors {
                 top: parent.top
@@ -29,14 +26,13 @@ Rectangle {
                 left: parent.left
                 right: parent.horizontalCenter
             }
-            color: "#811199"
             Text {
                 id: namePlaceText
                 anchors.centerIn: parent
             }
         }
 
-        Rectangle {
+        Item {
             id: phonePlace
             anchors {
                 top: parent.top
@@ -44,7 +40,6 @@ Rectangle {
                 left: parent.horizontalCenter
                 right: parent.right
             }
-            color: "#818889"
             Text {
                 id: phonePlaceText
                 anchors.centerIn: parent
@@ -52,7 +47,7 @@ Rectangle {
         }
     }
 
-    Rectangle {
+    Item {
         id: eyeInfoPlace
         anchors {
             left: parent.left
@@ -60,32 +55,29 @@ Rectangle {
             top: patientPersonalInfoPlace.bottom
         }
         height: (parent.height / 4) * 2
-        color: "#00db07"
 
-        Rectangle {
+        Item {
             id: leftEyePlace
             anchors {
                 left: parent.left
                 right: parent.horizontalCenter
+                bottom: parent.bottom
                 top: parent.top
             }
-            height: (parent.height / 5) * 3
-            color: "green"
             Text {
                 id: leftEyePlaceText
                 anchors.centerIn: parent
             }
         }
 
-        Rectangle {
+        Item {
             id: rightEyePlace
             anchors {
                 left: parent.horizontalCenter
                 right: parent.right
                 bottom: parent.bottom
+                top: parent.top
             }
-            height: (parent.height / 5) * 3
-            color: "red"
             Text {
                 id: rightEyePlaceText
                 anchors.centerIn: parent
@@ -94,7 +86,7 @@ Rectangle {
 
     }
 
-    Rectangle {
+    Item {
         id: typeAndDetailPlace
         anchors {
             left: parent.left
@@ -102,9 +94,8 @@ Rectangle {
             top: eyeInfoPlace.bottom
             bottom: parent.bottom
         }
-        height: parent.height / 4
-        color: "#2b76ba"
-        Rectangle {
+//        height: parent.height / 4
+        Item {
             id: lensTypePlace
             anchors {
                 top: parent.top
@@ -112,14 +103,13 @@ Rectangle {
                 left: parent.left
             }
             width: parent.width / 2
-            color: "#000155"
             Text {
                 id: lensTypePlaceText
                 anchors.centerIn: parent
             }
         }
 
-        Rectangle {
+        Item {
             id: detailPlace
             anchors {
                 top: parent.top
@@ -127,7 +117,6 @@ Rectangle {
                 left: lensTypePlace.right
                 right: parent.right
             }
-            color: "#800029"
             Text {
                 id: detailPlaceText
                 anchors.centerIn: parent

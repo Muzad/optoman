@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.1
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
 import "control" as EyeControl
@@ -7,6 +7,17 @@ Item {
     id:addPageRoot
     width: 350
     height: 550
+
+    function clear()
+    {
+        customerName.text = ""
+        customerPhone.text = ""
+        lensType.text = ""
+        leftEyeReel.clear()
+        rightEyeReel.clear()
+        detailArea.text = ""
+
+    }
 
     Image {
         source: "img/background.png"
@@ -18,21 +29,21 @@ Item {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
-        height: parent.height / 7
-        BorderImage {
+        height: parent.height / 9
+        Image {
             id: name
             anchors.fill: parent
-            source: "img/barBack.png"
-            border.left: 13; border.top: 5
-            border.right: 13; border.bottom: 10
+            source: "img/toolBar.png"
         }
 
         Image {
             id: backButton
-            anchors.top: parent.top
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.leftMargin: 15
             anchors.left: parent.left
-            width: height
-            height: parent.height/ 1.2
+            smooth: true
+            width: height * 1.5
+            height: parent.height/ 1.4
             source: "img/back.png"
             MouseArea {
                 anchors.fill: parent
@@ -44,10 +55,12 @@ Item {
         }
         Image {
             id: saveButton
-            anchors.top: parent.top
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.rightMargin: 15
             anchors.right: parent.right
-            width: height
-            height: parent.height/ 1.2
+            smooth: true
+            width: height * 1.5
+            height: parent.height/ 1.4
             source: "img/done.png"
             MouseArea {
                 anchors.fill: parent
@@ -83,6 +96,7 @@ Item {
             id: customerPhone
             width: parent.width / 1.2
             height: parent.height /9
+            inputMethodHints: Qt.ImhDigitsOnly
             placeholderText: "Phone"
             anchors.horizontalCenter: parent.horizontalCenter
         }
