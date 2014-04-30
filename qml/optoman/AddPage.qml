@@ -52,7 +52,7 @@ Item {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    DBMAN.addInfo( "8888", customerName.text, customerPhone.text, leftEyeReel.sphValue, leftEyeReel.cylValue, leftEyeReel.axValue, rightEyeReel.sphValue, rightEyeReel.cylValue, rightEyeReel.axValue, "lensType", detailArea.text, false)
+                    DBMAN.addInfo( "8888", customerName.text, customerPhone.text, leftEyeReel.sphValue, leftEyeReel.cylValue, leftEyeReel.axValue, rightEyeReel.sphValue, rightEyeReel.cylValue, rightEyeReel.axValue, lensType.text, detailArea.text, false)
                     DBMAN.reloadModel()
                     root.state = ""
                 }
@@ -83,7 +83,15 @@ Item {
             id: customerPhone
             width: parent.width / 1.2
             height: parent.height /9
-            placeholderText: "Phone 09123456789"
+            placeholderText: "Phone"
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
+
+        TextField {
+            id: lensType
+            width: parent.width / 1.2
+            height: parent.height /9
+            placeholderText: "Lens Type"
             anchors.horizontalCenter: parent.horizontalCenter
         }
 
