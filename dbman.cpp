@@ -5,6 +5,7 @@
 #include <QSqlQuery>
 #include <QVariant>
 #include <QDebug>
+#include <QDateTime>
 #include "patientsqlmodel.h"
 #include <QQmlContext>
 
@@ -39,9 +40,10 @@ void DbMan::addInfo(QString devCode, QString patientName, QString patientPhone, 
         return;
 
     QSqlQuery query;
-    query.prepare("INSERT INTO patientinfo (deviceCode , name , phone , leftEyeSph ,leftEyeCyl ,leftEyeAx , rightEyeSph ,rightEyeCyl , rightEyeAx, lensType, detail, synced)"
-                  " VALUES (:DeviceCode, :PatientName,:PatientPhone ,:LeftEyeSPH, :LeftEyeCyl, :LeftEyeAx,:RightEyeSPH, :RightEyeCyl, :RightEyeAx, :LensType, :Detail, :SyncState)");
+    query.prepare("INSERT INTO patientinfo (date, deviceCode , name , phone , leftEyeSph ,leftEyeCyl ,leftEyeAx , rightEyeSph ,rightEyeCyl , rightEyeAx, lensType, detail, synced)"
+                  " VALUES (:CurrentDateTime, :DeviceCode, :PatientName,:PatientPhone ,:LeftEyeSPH, :LeftEyeCyl, :LeftEyeAx,:RightEyeSPH, :RightEyeCyl, :RightEyeAx, :LensType, :Detail, :SyncState)");
 
+    query.bindValue(":CurrentDateTime", QDateTime::currentDateTime());
     query.bindValue(":DeviceCode", devCode);
     query.bindValue(":PatientName", patientName );
     query.bindValue(":PatientPhone", patientPhone);
@@ -71,7 +73,7 @@ bool DbMan::createConnection()
     }
 
     QSqlQuery query;
-    query.exec("create table patientinfo (deviceCode varchar(4), name varchar(25), phone varchar(15) , leftEyeSph NUMERIC(2,2),leftEyeCyl NUMERIC(2,2),leftEyeAx NUMERIC(2,2), rightEyeSph NUMERIC(2,2),rightEyeCyl NUMERIC(2,2),rightEyeAx NUMERIC(2,2),"
+    query.exec("create table patientinfo (date datetime,deviceCode varchar(4), name varchar(25), phone varchar(15) , leftEyeSph NUMERIC(2,2),leftEyeCyl NUMERIC(2,2),leftEyeAx NUMERIC(2,2), rightEyeSph NUMERIC(2,2),rightEyeCyl NUMERIC(2,2),rightEyeAx NUMERIC(2,2),"
                " lensType varchar(6),detail varchar(200), synced bool DEFAULT ('false'))");
 
     return true;
