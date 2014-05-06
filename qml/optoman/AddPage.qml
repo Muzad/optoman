@@ -109,62 +109,7 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
         }
 
-        Row {
-            id: leftEyeRow
-            width: parent.width
-            Rectangle {
-                color: "gray"
-                border.width: 4
-                border.color: "#362a2a"
-                radius: 25
-                width: parent.width / 8
-                height: parent.height
-                Text {
-                    anchors.centerIn: parent
-                    text: qsTr("Left \nEye")
-                    color: "yellow"
-                    font.bold: true
-                    font.pixelSize: parent.height / 6
-                    font.family: "Droid Serif"
-                }
-            }
 
-            Column {
-                id: leftEyePicker
-                width: parent.width / 1.6
-                Row {
-                    width: parent.width
-                    Text {
-                        id: leftSphText
-                        width: (parent.width-2*parent.spacing)*0.27
-                        text: "SPH"
-                        color: "#666666"
-                    }
-                    Text {
-                        id: leftCylText
-                        width: (parent.width-2*parent.spacing)*0.27
-                        text: "CYL"
-                        color: "#666666"
-                    }
-                    Text {
-                        width: (leftEyeReel.height +3)//-2*parent.spacing)*0.27
-                        text: ""
-                        color: "#666666"
-                    }
-                    Text {
-                        id: leftAxText
-                        width: (parent.width-2*parent.spacing)*0.27
-                        text: "AX"
-                        color: "#666666"
-                    }
-                }
-                EyeControl.EyeReel {
-                    id: leftEyeReel
-                    width: parent.width
-                    height: addPageRoot.height / 8
-                }
-            }
-        }
 
         Row {
             id: rightEyeRow
@@ -219,6 +164,63 @@ Item {
                     font.bold: true
                     font.pixelSize: parent.height / 6
                     font.family: "Droid Serif"
+                }
+            }
+        }
+
+        Row {
+            id: leftEyeRow
+            width: parent.width
+            Rectangle {
+                color: "gray"
+                border.width: 4
+                border.color: "#362a2a"
+                radius: 25
+                width: parent.width / 8
+                height: parent.height
+                Text {
+                    anchors.centerIn: parent
+                    text: qsTr("Left \nEye")
+                    color: "yellow"
+                    font.bold: true
+                    font.pixelSize: parent.height / 6
+                    font.family: "Droid Serif"
+                }
+            }
+
+            Column {
+                id: leftEyePicker
+                width: parent.width / 1.6
+                Row {
+                    width: parent.width
+                    Text {
+                        id: leftSphText
+                        width: (parent.width-2*parent.spacing)*0.27
+                        text: "SPH"
+                        color: "#666666"
+                    }
+                    Text {
+                        id: leftCylText
+                        width: (parent.width-2*parent.spacing)*0.27
+                        text: "CYL"
+                        color: "#666666"
+                    }
+                    Text {
+                        width: (leftEyeReel.height +3)//-2*parent.spacing)*0.27
+                        text: ""
+                        color: "#666666"
+                    }
+                    Text {
+                        id: leftAxText
+                        width: (parent.width-2*parent.spacing)*0.27
+                        text: "AX"
+                        color: "#666666"
+                    }
+                }
+                EyeControl.EyeReel {
+                    id: leftEyeReel
+                    width: parent.width
+                    height: addPageRoot.height / 8
                 }
             }
         }
