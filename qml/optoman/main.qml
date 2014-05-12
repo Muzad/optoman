@@ -1,4 +1,5 @@
 import QtQuick 2.1
+import QtQuick.Controls 1.1
 
 Rectangle {
     id: root
@@ -6,12 +7,39 @@ Rectangle {
     height: 550
     color: "lightblue"
 
+    Row {
+        id:searchBar
+        width: parent.width / 1.2
+        height: parent.height /9
+
+        TextField {
+            id: searchField
+            width: parent.width / 1.1
+            height: parent.height
+            placeholderText: "Search By Name"
+        }
+
+        Button {
+            id: searchButton
+            width: parent.width / 3.1
+            height: parent.height
+            onClicked: {
+                DBMAN.reloadModel(searchField.text,searchField.text)
+            }
+        }
+    }
+
     ListView {
         id: mainView
-        anchors.fill: parent
+        anchors.top: searchBar.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        //        anchors.fill: parent
         property int w: parent.width
         property int h: parent.height / 7
         model: patientmodel
+        clip: true
         delegate: PatientInfoDelegate {
             width: mainView.w
             height: mainView.h
@@ -49,7 +77,7 @@ Rectangle {
 
     AddPage {
         id: addpage
-       anchors.top : root.bottom
+        anchors.top : root.bottom
         width: parent.width
         height: parent.height
     }

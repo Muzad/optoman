@@ -37,10 +37,15 @@ QHash<int, QByteArray> PatientSqlModel::roleNames() const {
 }
 #endif
 
-PatientSqlModel::PatientSqlModel(QObject *parent)://,int tableID) :
+PatientSqlModel::PatientSqlModel(QObject *parent,QString customerName="",QString customerPhone=""):
     QSqlQueryModel(parent) //, patientPhone(tableID)
 {
-    SQL_SELECT ="SELECT * FROM patientinfo";//WHERE phone='"+patientPhone.toString ()+"'";
+    QString where = "1=1"; //By default return all rows
+    if(!customerName.isEmpty())
+        where = " name LIKE '%"+customerName+"%'";
+    if (!customerPhone.isEmpty())
+        where.append(" OR phone LIKE '%"+customerPhone+"%'");
+    SQL_SELECT ="SELECT * FROM patientinfo WHERE "+ where;
 
 #if QT_VERSION < 0x050000
     int idx = 0;
@@ -52,15 +57,12 @@ PatientSqlModel::PatientSqlModel(QObject *parent)://,int tableID) :
 #endif
 
     reload ();
-
 }
 
 void PatientSqlModel::reload()
 {
-    setQuery(SQL_SELECT );//, QSqlDatabase::database ());
+    setQuery(SQL_SELECT );
 }
-
-
 
 QVariant PatientSqlModel::data(const QModelIndex &index, int role) const
 {

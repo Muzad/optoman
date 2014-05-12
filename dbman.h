@@ -17,9 +17,10 @@ public slots:
     void addInfo(QString, QString, QString, qreal, qreal ,qreal , qreal, qreal ,qreal ,QString ,QString ,bool );
 
     bool createConnection();
-    PatientSqlModel *model();
+    PatientSqlModel *model(QString customerName="", QString customerPhone="");
     void reloadModel();
     void setGlobalViewer(QQuickView *view);
+    void reloadModel(QString customerName, QString customerPhone);
 public:
     PatientSqlModel *patientModel;
     QQuickView *viewer;

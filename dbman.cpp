@@ -14,19 +14,24 @@ void DbMan::setGlobalViewer(QQuickView *view)
     viewer = view ;
 }
 
-PatientSqlModel *DbMan::model()
+PatientSqlModel *DbMan::model(QString customerName, QString customerPhone)
 {
     if (!createConnection()){
         qDebug()<<"Failed";
     }
 
-    patientModel = new PatientSqlModel(this);
+    patientModel = new PatientSqlModel(this, customerName, customerPhone);
     return patientModel;
 }
 
 void DbMan::reloadModel()
 {
     viewer->rootContext ()->setContextProperty("patientmodel", this->model ());
+}
+
+void DbMan::reloadModel(QString customerName,QString customerPhone)
+{
+    viewer->rootContext ()->setContextProperty("patientmodel", this->model (customerName,customerPhone));
 }
 
 DbMan::DbMan(QObject *parent) :

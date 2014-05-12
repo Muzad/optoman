@@ -8,7 +8,7 @@ class PatientSqlModel : public QSqlQueryModel
 {
     Q_OBJECT
 public:
-    explicit PatientSqlModel(QObject *parent);//,int tableID);
+    explicit PatientSqlModel(QObject *parent,QString customerName, QString customerPhone);
     void reload( );
     QVariant data(const QModelIndex &item, int role) const;
 
@@ -22,6 +22,7 @@ public:
 #if QT_VERSION < 0x050000
     QHash<int, QByteArray> roleNames;
 #endif
+//    void filter(QString customerName, QString customerPhone);
 };
 
 #endif // PatientSqlModel_H

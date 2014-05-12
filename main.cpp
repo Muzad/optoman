@@ -14,8 +14,6 @@ int main(int argc, char *argv[])
 
     DbMan dbmanager;
 
-//    dbmanager.reloadModel();
-
     QtQuick2ApplicationViewer viewer;
     dbmanager.setGlobalViewer(&viewer);
     viewer.rootContext()->setContextProperty("DBMAN",&dbmanager);
