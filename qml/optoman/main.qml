@@ -23,6 +23,7 @@ Rectangle {
             id: searchButton
             width: parent.width / 3.1
             height: parent.height
+            text: "Search!"
             onClicked: {
                 DBMAN.reloadModel(searchField.text,searchField.text)
             }
@@ -35,7 +36,6 @@ Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        //        anchors.fill: parent
         property int w: parent.width
         property int h: parent.height / 7
         model: patientmodel
