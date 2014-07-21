@@ -1,11 +1,12 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.1
+import QtQml 2.2
 
 Rectangle {
     id: root
     width: 350
     height: 550
-    color: "lightblue"
+    color: "orange"
 
     Row {
         id:searchBar
@@ -43,6 +44,10 @@ Rectangle {
         delegate: PatientInfoDelegate {
             width: mainView.w
             height: mainView.h
+
+            dayValue: Qt.formatDateTime(date,'dd')
+            monthValue: Qt.formatDateTime(date,'mm')
+            yearValue: Qt.formatDateTime(date,'yy')
 
             nameText: name
             phoneText: phone

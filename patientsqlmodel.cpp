@@ -9,6 +9,7 @@
 #include <QtSql/QSqlQueryModel>
 
 const char* PatientSqlModel::COLUMN_NAMES[] = {
+    "date",
     "deviceCode",
     "name",
     "phone",
