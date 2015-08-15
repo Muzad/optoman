@@ -11,6 +11,7 @@ QML_IMPORT_PATH =
 SOURCES += main.cpp \
     dbman.cpp \
     patientsqlmodel.cpp \
+    calendar/jalali.cpp
 
 # Installation path
 # target.path =
@@ -22,6 +23,7 @@ qtcAddDeployment()
 HEADERS += \
     dbman.h \
     patientsqlmodel.h \
+    calendar/jalali.h
 
 OTHER_FILES += \
     qml/optoman/component/EyeReel.qml \
