@@ -10,7 +10,7 @@ QML_IMPORT_PATH =
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp \
     dbman.cpp \
-    patientsqlmodel.cpp
+    patientsqlmodel.cpp \
 
 # Installation path
 # target.path =
@@ -21,10 +21,13 @@ qtcAddDeployment()
 
 HEADERS += \
     dbman.h \
-    patientsqlmodel.h
+    patientsqlmodel.h \
 
 OTHER_FILES += \
     qml/optoman/component/EyeReel.qml \
     android/AndroidManifest.xml
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+
+DISTFILES += \
+    qtquick2applicationviewer/qtquick2applicationviewer.pri
