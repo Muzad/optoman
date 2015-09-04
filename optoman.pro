@@ -1,35 +1,19 @@
-QT += sql
-# Add more folders to ship with the application, here
-folder_01.source = qml/optoman
-folder_01.target = qml
-DEPLOYMENTFOLDERS = folder_01
+TEMPLATE = app
 
-# Additional import path used to resolve QML modules in Creator's code model
-QML_IMPORT_PATH =
+QT += qml quick sql
 
-# The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp \
     dbman.cpp \
-    patientsqlmodel.cpp \
-    calendar/jalali.cpp
+    patientsqlmodel.cpp
+config += c++11
+RESOURCES += qml.qrc
 
-# Installation path
-# target.path =
+# Additional import path used to resolve QML modules in Qt Creator's code model
+QML_IMPORT_PATH =
 
-# Please do not modify the following two lines. Required for deployment.
-include(qtquick2applicationviewer/qtquick2applicationviewer.pri)
-qtcAddDeployment()
+# Default rules for deployment.
+include(deployment.pri)
 
 HEADERS += \
     dbman.h \
-    patientsqlmodel.h \
-    calendar/jalali.h
-
-OTHER_FILES += \
-    qml/optoman/component/EyeReel.qml \
-    android/AndroidManifest.xml
-
-ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
-
-DISTFILES += \
-    qtquick2applicationviewer/qtquick2applicationviewer.pri
+    patientsqlmodel.h

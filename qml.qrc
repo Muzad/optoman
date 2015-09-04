@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/optoman/img/up.png</file>
+        <file>qml/optoman/AddPage.qml</file>
+        <file>qml/optoman/PatientInfoDelegate.qml</file>
+        <file>qml/optoman/main.qml</file>
+        <file>qml/optoman/control/Button.qml</file>
+        <file>qml/optoman/control/EyeReel.qml</file>
+        <file>qml/optoman/control/Reel.qml</file>
+        <file>qml/optoman/control/gfx/atIcon.png</file>
+        <file>qml/optoman/control/gfx/button.png</file>
+        <file>qml/optoman/control/gfx/button_pressed.png</file>
+        <file>qml/optoman/img/back.png</file>
+        <file>qml/optoman/img/background.png</file>
+        <file>qml/optoman/img/done.png</file>
+        <file>qml/optoman/img/itemBack.png</file>
+        <file>qml/optoman/img/toolBar.png</file>
+    </qresource>
+</RCC>

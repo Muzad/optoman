@@ -8,10 +8,18 @@
 #include <QDateTime>
 #include "patientsqlmodel.h"
 #include <QQmlContext>
+#include <QQmlApplicationEngine>
+#include <QObject>
 
-void DbMan::setGlobalViewer(QQuickView *view)
+DbMan::DbMan(QObject *parent):
+QObject(parent)
 {
-    viewer = view ;
+
+}
+
+void DbMan::setGlobalViewer(QQmlApplicationEngine &engine)
+{
+    viewer = &engine ;
 }
 
 PatientSqlModel *DbMan::model(QString customerName, QString customerPhone)
@@ -32,11 +40,6 @@ void DbMan::reloadModel()
 void DbMan::reloadModel(QString customerName,QString customerPhone)
 {
     viewer->rootContext ()->setContextProperty("patientmodel", this->model (customerName,customerPhone));
-}
-
-DbMan::DbMan(QObject *parent) :
-    QObject(parent)
-{
 }
 
 void DbMan::addInfo(QString devCode, QString patientName, QString patientPhone, qreal leftEyeSPH, qreal leftEyeCyl, qreal leftEyeAx, qreal rightEyeSPH, qreal rightEyeCyl, qreal rightEyeAx, QString lensType, QString detail, bool syncState)

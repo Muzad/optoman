@@ -1,9 +1,8 @@
-#include <QtGui/QGuiApplication>
-#include "qtquick2applicationviewer.h"
-//#include <QQmlContext>
-#include "dbman.h"
-#include <QtQml/QQmlContext>
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
 #include <QDir>
+#include "dbman.h"
+#include <QQmlContext>
 
 int main(int argc, char *argv[])
 {
@@ -12,15 +11,14 @@ int main(int argc, char *argv[])
     QDir currentDir;
     currentDir.mkdir ("data");
 
-    DbMan dbmanager;
+    QQmlApplicationEngine engine;
 
-    QtQuick2ApplicationViewer viewer;
-    dbmanager.setGlobalViewer(&viewer);
-    viewer.rootContext()->setContextProperty("DBMAN",&dbmanager);
-    viewer.rootContext()->setContextProperty("patientmodel",dbmanager.model());
+    DbMan dbmanager(0);
+    dbmanager.setGlobalViewer(engine);
 
-    viewer.setMainQmlFile(QStringLiteral("qml/optoman/main.qml"));
-    viewer.showExpanded();
+    engine.rootContext()->setContextProperty("DBMAN",&dbmanager);
+    engine.rootContext()->setContextProperty("patientmodel",dbmanager.model());
+    engine.load(QUrl(QStringLiteral("qrc:/qml/optoman/main.qml")));
 
     return app.exec();
 }
