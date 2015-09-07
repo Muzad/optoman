@@ -15,5 +15,7 @@
         <file>qml/optoman/img/done.png</file>
         <file>qml/optoman/img/itemBack.png</file>
         <file>qml/optoman/img/toolBar.png</file>
+        <file>qml/optoman/img/plus.png</file>
+        <file>qml/optoman/img/search.png</file>
     </qresource>
 </RCC>

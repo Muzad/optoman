@@ -2,6 +2,7 @@ import QtQuick 2.5
 import QtQuick.Window 2.2
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
+import QtGraphicalEffects 1.0
 
 Window {
     visible: true
@@ -11,27 +12,48 @@ Window {
         id: root
         anchors.fill: parent
 
-        Row {
+        Rectangle {
             id:searchBar
-            width: parent.width / 1.2
+            width: parent.width
             height: parent.height /9
+            color: "#3498DB"
 
+            Image {
+                id: searchImg
+                source: "img/search.png"
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.margins: 10
+                fillMode: Image.PreserveAspectFit
+            }
             TextField {
                 id: searchField
-                width: parent.width / 1.1
                 height: parent.height
+                anchors.left: searchImg.right
+                anchors.right: parent.right
+                anchors.rightMargin: 15
                 placeholderText: "Search By Name"
-            }
+                font.pixelSize: 18
 
-            Button {
-                id: searchButton
-                width: parent.width / 3.1
-                height: parent.height
-                text: "Search!"
-                onClicked: {
-                    DBMAN.reloadModel(searchField.text,searchField.text)
+                style: TextFieldStyle {
+                    textColor: "white"
+                    placeholderTextColor: "lightgray"
+                    background: Item {
+                        implicitWidth: 100
+                        implicitHeight: 24
+                    }
                 }
-
+            }
+            Rectangle{
+                color: "lightgray"
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                anchors.leftMargin: 25
+                anchors.rightMargin: anchors.leftMargin
+                anchors.bottomMargin: 10
+                height: 1
             }
         }
 
@@ -67,16 +89,19 @@ Window {
 
             }
 
-            Item {
+            Rectangle {
                 id: addButton
                 anchors.bottom: parent.bottom
-                anchors.horizontalCenter: parent.horizontalCenter
-                width: parent.width / 4
+                anchors.right: parent.right
+                anchors.margins: width / 2.7
+                color: "#3498DB"
+                width: parent.width * 0.2
                 height: width
+                radius: width/2
                 Image {
-                    anchors.fill: parent
-                    source: "img/up.png"
-                    smooth: true
+                    id: plusImg
+                    anchors.centerIn: parent
+                    source: "img/plus.png"
                 }
 
                 MouseArea {
@@ -87,6 +112,17 @@ Window {
                     }
                 }
             }
+
+            DropShadow {
+                anchors.fill: addButton
+                source: addButton
+                horizontalOffset: 5
+                verticalOffset: 7
+                radius: 5
+                samples: 30
+                color: "#50000000"
+            }
+
         }
         AddPage {
             id: addpage
@@ -125,5 +161,4 @@ Window {
             }
         ]
     }
-
 }
