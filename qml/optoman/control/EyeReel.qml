@@ -1,152 +1,120 @@
 import QtQuick 2.1
+import QtQuick.Extras 1.4
+//import QtQuick.Controls.Styles 1.4
 
-Item {
-    id: container
+Item{
+    id: eyeReel
 
-    property int w: (width-2*spacing)*0.27
-    property int h: height
-
-    property int atIconWidth: width / 7
-    property int atIconHeight: width / 7
-    // Font properties
-    property string fontName: 'Helvetica'
-    property int fontSize: 15
-    property color fontColor: "#666666"
-    // Spacing between items
-    property int spacing: width / 35
-
-    property string sphValue
-    property string cylValue
-    property string axValue
-
-
-    property Component itemBackground: Component {
-        BorderImage {
-            border { top: 8; bottom: 8; left: 8; right: 8 }
-            source: "gfx/button.png"
-        }
-    }
-    property Component itemBackgroundPressed: Component {
-        BorderImage {
-            border { top: 8; bottom: 8; left: 8; right: 8 }
-            source: "gfx/button_pressed.png"
-        }
-    }
-
-    width: 380
-    height:  60
-
-    Component.onCompleted: {
-        sphReel.index = sphModel.start
-        cylReel.index = cylModel.start
-        axReel.index = axModel.start
-    }
-
-    function clear()
+    function sphValue()
     {
-        sphReel.index = sphModel.start
-        cylReel.index = cylModel.start
-        axReel.index = axModel.start
+        return sphModel.get(tumbler.currentIndexAt(0)).number
     }
 
-    Component {
-        id: sphDelegate
-        Button {
-            id:sphb
-            width: container.w
-            height: container.h
-            text: number
-            fontColor: container.fontColor
-            fontName: container.fontName
-            fontSize: container.fontSize
-            bg: itemBackground
-            bgPressed: itemBackgroundPressed
-            onClicked: { sphReel.index = index; sphReel.toggle(); console.log(sphb.text)}//container.sphValue = text }
-        }
+    function cylValue()
+    {
+        return cylModel.get(tumbler.currentIndexAt(1)).number
     }
 
-    Component {
-        id: cylDelegate
-        Button {
-            width: container.w
-            height: container.h
-            text: number
-            fontColor: container.fontColor
-            fontName: container.fontName
-            fontSize: container.fontSize
-            bg: itemBackground
-            bgPressed: itemBackgroundPressed
-            onClicked: { cylReel.index = index; cylReel.toggle(); container.cylValue = text }
-        }
+    function axValue()
+    {
+        return axModel.get(tumbler.currentIndexAt(2)).number
     }
 
-    Component {
-        id: axDelegate
-        Button {
-            width: container.w
-            height: container.h
-            text: number
-            fontColor: container.fontColor
-            fontName: container.fontName
-            fontSize: container.fontSize
-            bg: itemBackground
-            bgPressed: itemBackgroundPressed
-            onClicked: { axReel.index = index; axReel.toggle(); container.axValue = number }
-        }
+    function reset()
+    {
+        tumbler.setCurrentIndexAt(0,sphModel.start)
+        tumbler.setCurrentIndexAt(1,cylModel.start)
+        tumbler.setCurrentIndexAt(2,axModel.start)
     }
+
     Row {
-        id: reels
-        spacing: container.spacing
-        anchors.fill: parent
-
-        Reel {
-            id: sphReel
-            width: container.w
-            height: container.h
-            model: sphModel
-            delegate: sphDelegate
-            autoClose: true
-            onIndexChanged: {
-                container.sphValue = sphModel.get(index).number
-            }
+        id:titles
+        height: 25
+        anchors.left: parent.left
+        anchors.leftMargin: 10
+        spacing: 10
+        Text {
+            width: c1.width
+            text: "SPH"
+            color: "#666666"
         }
-
-        Reel {
-            id: cylReel
-            width: container.w
-            height: container.h
-            model: cylModel
-            delegate: cylDelegate
-            autoClose: true
-            onIndexChanged: {
-                container.cylValue = cylModel.get(index).number
-            }
-
+        Text {
+            width: c2.width
+            text: "CYL"
+            color: "#666666"
         }
-
-        Image {
-            id:atIcon
-            width: container.atIconWidth
-            height: container.atIconHeight
-            smooth: true
-            source: "gfx/atIcon.png"
-            fillMode: Image.PreserveAspectFit
-            anchors.verticalCenter: parent.verticalCenter
+        Text {
+            width: c3.width
+            text: "@AX"
+            color: "#666666"
         }
-
-        Reel {
-            id: axReel
-            width: container.w
-            height: container.h
-            model: axModel
-            delegate:  axDelegate
-            autoClose: true
-            onIndexChanged: {
-                container.axValue = axModel.get(index).number
+    }
+    Rectangle{
+        id:tumblerBox
+        color: "transparent"
+        anchors.left: parent.left
+        anchors.top: titles.bottom
+        width: parent.width - 5
+        height: parent.height - titles.height
+        Tumbler {
+            id: tumbler
+            height: parent.height
+            TumblerColumn {
+                id:c1
+                width: tumblerBox.width / 3 - 10
+                model: sphModel
             }
+            TumblerColumn {
+                id:c2
+                width: c1.width
+                model: cylModel
+            }
+            TumblerColumn {
+                id:c3
+                width: c1.width
+                model: axModel
+            }
+            //            style: myTumblerStyle
+
+            Component.onCompleted: reset()
         }
     }
 
+//    Component{
+//        id: myTumblerStyle
+//        TumblerStyle{
+
+//            delegate: Text {
+//                id: test
+//                horizontalAlignment: Text.AlignHCenter
+//                text: styleData.value
+//                height: green.height/3
+//                color: (styleData.current)?"black": "gray"
+//                MouseArea{
+//                    anchors.fill: parent
+//                    onClicked: {
+//                        tumbler2.setCurrentIndexAt(1, styleData.index)
+//                        print(styleData.index)
+//                    }
+//                }
+//            }
+//            separator: Rectangle{
+//                color: "blue"
+//                width: 10
+//                height: 50
+//            }
+//            background: Rectangle{
+//                color: "blue"
+//                border.color: "pink"
+//                width: eyeReel/3
+//                height: 100
+//            }
+//            highlight: Rectangle{
+//                color: "transparent"
+//                height: 40
+//            }
+//        }
+//    }
 
     ListModel{
         id: sphModel

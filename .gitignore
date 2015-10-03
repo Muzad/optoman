@@ -1,2 +1,4 @@
-optoman.pro.user
-*.pro.user*
+optoman.desktop
+optoman.pro.user*
+todo
+*.directory
