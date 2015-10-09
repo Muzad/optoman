@@ -6,11 +6,16 @@ Image {
     property alias phoneText: phonePlaceText.text
     property alias leftEyeText: leftEyePlaceText.text
     property alias rightEyeText: rightEyePlaceText.text
-    property alias lensTypeText: lensTypePlaceText.text
-    property alias detailText: detailPlaceText.text
+//    property alias lensTypeText: lensTypePlaceText.text
+//    property alias detailText: detailPlaceText.text
     property alias dayValue: dayText.text
     property alias monthValue: monthText.text
     property alias yearValue: yearText.text
+
+    property int fontSize: width * 0.04
+
+//    LayoutMirroring.enabled: true
+//    LayoutMirroring.childrenInherit: true
 
     Column {
         id: datePlace
@@ -60,7 +65,6 @@ Image {
                 font.bold: true
             }
         }
-
     }
 
     Item {
@@ -70,7 +74,7 @@ Image {
             right: datePlace.left
             top: parent.top
         }
-        height: parent.height / 4
+        height: parent.height / 2
 
         Item {
             id: namePlace
@@ -82,7 +86,13 @@ Image {
             }
             Text {
                 id: namePlaceText
-                anchors.centerIn: parent
+//                anchors.verticalCenter: parent.verticalCenter
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                anchors.leftMargin: parent.width * 0.1
+                font.pixelSize: fontSize * 1.2
+                font.bold: true
+                font.italic: true
             }
         }
 
@@ -96,7 +106,11 @@ Image {
             }
             Text {
                 id: phonePlaceText
-                anchors.centerIn: parent
+//                anchors.verticalCenter: parent.verticalCenter
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                anchors.leftMargin: namePlaceText.anchors.leftMargin
+                font.pixelSize: fontSize
             }
         }
     }
@@ -105,12 +119,12 @@ Image {
         id: eyeInfoPlace
         anchors {
             left: parent.left
-            right: parent.right
+            right: datePlace.left
             top: patientPersonalInfoPlace.bottom
         }
-        height: (parent.height / 4) * 2
+        height: parent.height / 2
 
-        Item {
+        Item{
             id: leftEyePlace
             anchors {
                 left: parent.left
@@ -120,61 +134,67 @@ Image {
             }
             Text {
                 id: leftEyePlaceText
-                anchors.centerIn: parent
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: namePlaceText.anchors.leftMargin
+                font.pixelSize: fontSize
             }
         }
 
-        Item {
+        Item{
             id: rightEyePlace
             anchors {
-                left: parent.horizontalCenter
+                left: leftEyePlace.right
                 right: parent.right
                 bottom: parent.bottom
                 top: parent.top
             }
             Text {
                 id: rightEyePlaceText
-                anchors.centerIn: parent
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: namePlaceText.anchors.leftMargin
+                font.pixelSize: fontSize
             }
         }
 
     }
 
-    Item {
-        id: typeAndDetailPlace
-        anchors {
-            left: parent.left
-            right: parent.right
-            top: eyeInfoPlace.bottom
-            bottom: parent.bottom
-        }
-//        height: parent.height / 4
-        Item {
-            id: lensTypePlace
-            anchors {
-                top: parent.top
-                bottom: parent.bottom
-                left: parent.left
-            }
-            width: parent.width / 2
-            Text {
-                id: lensTypePlaceText
-                anchors.centerIn: parent
-            }
-        }
+//    Item {
+//        id: typeAndDetailPlace
+//        anchors {
+//            left: parent.left
+//            right: parent.right
+//            top: eyeInfoPlace.bottom
+//            bottom: parent.bottom
+//        }
+////        height: parent.height / 4
+//        Item {
+//            id: lensTypePlace
+//            anchors {
+//                top: parent.top
+//                bottom: parent.bottom
+//                left: parent.left
+//            }
+//            width: parent.width / 2
+//            Text {
+//                id: lensTypePlaceText
+//                anchors.centerIn: parent
+//            }
+//        }
 
-        Item {
-            id: detailPlace
-            anchors {
-                top: parent.top
-                bottom: parent.bottom
-                left: lensTypePlace.right
-                right: parent.right
-            }
-            Text {
-                id: detailPlaceText
-                anchors.centerIn: parent
-            }
-        }
-    }
+//        Item {
+//            id: detailPlace
+//            anchors {
+//                top: parent.top
+//                bottom: parent.bottom
+//                left: lensTypePlace.right
+//                right: parent.right
+//            }
+//            Text {
+//                id: detailPlaceText
+//                anchors.centerIn: parent
+//            }
+//        }
+//    }
 }

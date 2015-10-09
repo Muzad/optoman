@@ -82,10 +82,10 @@ Window {
 
                     nameText: name
                     phoneText: phone
-                    leftEyeText: leftEyeSph + " " + leftEyeCyl + " @" + leftEyeAx
-                    rightEyeText: rightEyeSph + " " + rightEyeCyl + " @" + rightEyeAx
-                    lensTypeText: lensType
-                    detailText: detail
+                    leftEyeText: leftEyeSph + "  " + leftEyeCyl + " @" + leftEyeAx
+                    rightEyeText: rightEyeSph + "  " + rightEyeCyl + " @" + rightEyeAx
+//                    lensTypeText: lensType
+//                    detailText: detail
                 }
 
             }
