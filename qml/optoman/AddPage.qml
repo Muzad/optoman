@@ -26,6 +26,9 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
         height: parent.height / 9
+
+        MouseArea{anchors.fill: parent}
+
         Image {
             id: name
             anchors.fill: parent
@@ -135,15 +138,18 @@ Item {
         TextArea {
             id: detailArea
             width: parent.width * 0.9
-            anchors.horizontalCenter: parent.horizontalCenter
             height: parent.height * 0.22
+            anchors.horizontalCenter: parent.horizontalCenter
+            inputMethodHints: Qt.ImhNoPredictiveText;
+            textMargin: 10
+
             Label{
                 id: placeHolderText
                 text: "Detail"
                 anchors.fill: parent
-                anchors.margins: 6
+                anchors.margins: parent.textMargin
                 color: "gray"
-                visible: parent.text ===""
+                visible: parent.text === ""
             }
         }
     }
