@@ -35,6 +35,7 @@ Window {
                 anchors.rightMargin: 15
                 placeholderText: "Search By Name"
                 font.pixelSize: 18
+                onTextChanged: DBMAN.reloadModel(searchField.text,searchField.text)
 
                 style: TextFieldStyle {
                     textColor: "white"
