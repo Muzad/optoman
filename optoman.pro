@@ -4,7 +4,9 @@ QT += qml quick sql
 
 SOURCES += main.cpp \
     dbman.cpp \
-    patientsqlmodel.cpp
+    patientsqlmodel.cpp \
+    helper.cpp \
+    calendar/jalali.cpp
 config += c++11
 RESOURCES += qml.qrc
 
@@ -16,4 +18,6 @@ include(deployment.pri)
 
 HEADERS += \
     dbman.h \
-    patientsqlmodel.h
+    patientsqlmodel.h \
+    helper.h \
+    calendar/jalali.h

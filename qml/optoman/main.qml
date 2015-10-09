@@ -75,9 +75,9 @@ Window {
                     width: mainView.w
                     height: mainView.h
 
-                    dayValue: Qt.formatDateTime(date,'dd')
-                    monthValue: Qt.formatDateTime(date,'MM')
-                    yearValue: Qt.formatDateTime(date,'yy')
+                    dayValue:   helper.gregorianToJalali(date).substr(8,2)
+                    monthValue: helper.gregorianToJalali(date).substr(5,2)
+                    yearValue:  helper.gregorianToJalali(date).substr(0,4)
 
                     nameText: name
                     phoneText: phone
