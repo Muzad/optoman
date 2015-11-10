@@ -18,6 +18,10 @@ Item {
     Image {
         source: "img/background.png"
         anchors.fill: parent
+        MouseArea{
+            anchors.fill: parent
+            onClicked: hideVirtualKeyboard()
+        }
     }
 
     Item {
@@ -27,12 +31,15 @@ Item {
         anchors.right: parent.right
         height: parent.height / 9
 
-        MouseArea{anchors.fill: parent}
 
         Image {
             id: name
             anchors.fill: parent
             source: "img/toolBar.png"
+        }
+        MouseArea{
+            anchors.fill: parent
+            onClicked: hideVirtualKeyboard()
         }
 
         Image {
@@ -47,6 +54,7 @@ Item {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
+                    hideVirtualKeyboard()
                     DBMAN.reloadModel()
                     root.state = ""
                 }
@@ -64,6 +72,7 @@ Item {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
+                    hideVirtualKeyboard()
                     DBMAN.addInfo( "8888", customerName.text, customerPhone.text,
                                   leftEye.sphValue(), leftEye.cylValue(), leftEye.axValue(),
                                   rightEye.sphValue(), rightEye.cylValue(), rightEye.axValue(),
@@ -92,6 +101,7 @@ Item {
             height: parent.height /9
             placeholderText: "Name"
             anchors.horizontalCenter: parent.horizontalCenter
+            inputMethodHints: Qt.ImhNoPredictiveText
         }
 
         TextField {
@@ -109,6 +119,7 @@ Item {
             height: parent.height /9
             placeholderText: "Lens Type"
             anchors.horizontalCenter: parent.horizontalCenter
+            inputMethodHints: Qt.ImhNoPredictiveText
         }
 
         Item{

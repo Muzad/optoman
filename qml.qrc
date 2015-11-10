@@ -17,5 +17,8 @@
         <file>qml/optoman/img/toolBar.png</file>
         <file>qml/optoman/img/plus.png</file>
         <file>qml/optoman/img/search.png</file>
+        <file>qml/optoman/ConfirmationDialog.qml</file>
+        <file>qml/optoman/img/trash.png</file>
+        <file>qml/optoman/img/itemBack_Pressed.png</file>
     </qresource>
 </RCC>

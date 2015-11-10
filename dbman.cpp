@@ -19,7 +19,7 @@ QObject(parent)
 
 void DbMan::setGlobalViewer(QQmlApplicationEngine &engine)
 {
-    viewer = &engine ;
+    viewer = &engine;
 }
 
 PatientSqlModel *DbMan::model(QString customerName, QString customerPhone)
@@ -42,13 +42,18 @@ void DbMan::reloadModel(QString customerName,QString customerPhone)
     viewer->rootContext ()->setContextProperty("patientmodel", this->model (customerName,customerPhone));
 }
 
+void DbMan::deleteRecord(QString id)
+{
+    QSqlQuery query("DELETE FROM patientinfo WHERE id='"+id+"'");
+}
+
 void DbMan::addInfo(QString devCode, QString patientName, QString patientPhone, qreal leftEyeSPH, qreal leftEyeCyl, qreal leftEyeAx, qreal rightEyeSPH, qreal rightEyeCyl, qreal rightEyeAx, QString lensType, QString detail, bool syncState)
 {
     if (!createConnection())
         return;
 
     QSqlQuery query;
-    query.prepare("INSERT INTO patientinfo (date, deviceCode , name , phone , leftEyeSph ,leftEyeCyl ,leftEyeAx , rightEyeSph ,rightEyeCyl , rightEyeAx, lensType, detail, synced)"
+    query.prepare("INSERT INTO patientinfo ( date, deviceCode , name , phone , leftEyeSph ,leftEyeCyl ,leftEyeAx , rightEyeSph ,rightEyeCyl , rightEyeAx, lensType, detail, synced)"
                   " VALUES (:CurrentDateTime, :DeviceCode, :PatientName,:PatientPhone ,:LeftEyeSPH, :LeftEyeCyl, :LeftEyeAx,:RightEyeSPH, :RightEyeCyl, :RightEyeAx, :LensType, :Detail, :SyncState)");
 
     query.bindValue(":CurrentDateTime", QDateTime::currentDateTime());
@@ -64,6 +69,7 @@ void DbMan::addInfo(QString devCode, QString patientName, QString patientPhone, 
     query.bindValue(":LensType", lensType);
     query.bindValue(":Detail", detail);
     query.bindValue(":SyncState", syncState); //cloud backend
+
     query.exec();
 }
 
@@ -81,7 +87,7 @@ bool DbMan::createConnection()
     }
 
     QSqlQuery query;
-    query.exec("create table patientinfo (date datetime,deviceCode varchar(4), name varchar(25), phone varchar(15) , leftEyeSph NUMERIC(2,2),leftEyeCyl NUMERIC(2,2),leftEyeAx NUMERIC(2,2), rightEyeSph NUMERIC(2,2),rightEyeCyl NUMERIC(2,2),rightEyeAx NUMERIC(2,2),"
+    query.exec("create table patientinfo (ID INTEGER primary key,date datetime,deviceCode varchar(4), name varchar(25), phone varchar(15) , leftEyeSph NUMERIC(2,2),leftEyeCyl NUMERIC(2,2),leftEyeAx NUMERIC(2,2), rightEyeSph NUMERIC(2,2),rightEyeCyl NUMERIC(2,2),rightEyeAx NUMERIC(2,2),"
                " lensType varchar(6),detail varchar(200), synced bool DEFAULT ('false'))");
 
     return true;

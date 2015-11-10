@@ -1,7 +1,7 @@
 import QtQuick 2.1
 
-Image {
-    source: "img/itemBack.png"
+Image{
+    source: itemMouseArea.pressed?"img/itemBack_Pressed.png" :"img/itemBack.png"
     property alias nameText: namePlaceText.text
     property alias phoneText: phonePlaceText.text
     property alias leftEyeText: leftEyePlaceText.text
@@ -16,7 +16,11 @@ Image {
 
 //    LayoutMirroring.enabled: true
 //    LayoutMirroring.childrenInherit: true
-
+    MouseArea{
+        id: itemMouseArea
+        anchors.fill: parent
+        onPressAndHold: confirmationDialog.show(ID)
+    }
     Column {
         id: datePlace
         anchors.right: parent.right

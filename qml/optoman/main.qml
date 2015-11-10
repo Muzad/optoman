@@ -8,6 +8,11 @@ Window {
     visible: true
     width: 350
     height: 550
+
+    function hideVirtualKeyboard(){
+        Qt.inputMethod.hide();
+    }
+
     Item{
         id: root
         anchors.fill: parent
@@ -88,7 +93,6 @@ Window {
 //                    lensTypeText: lensType
 //                    detailText: detail
                 }
-
             }
 
             Rectangle {
@@ -126,6 +130,7 @@ Window {
             }
 
         }
+
         AddPage {
             id: addpage
             anchors.top : root.bottom
@@ -133,13 +138,21 @@ Window {
             height: parent.height
         }
 
+        ConfirmationDialog{
+            id: confirmationDialog
+
+            onAccepted: {
+                DBMAN.deleteRecord(recordId)
+                DBMAN.reloadModel()
+                hide()
+            }
+            onRejected: hide()
+        }
+
         states: [
             State {
                 name: "ADDSTATE"
-                AnchorChanges {
-                    target: addpage
-                    anchors.top: root.top
-                }
+                AnchorChanges {target: addpage; anchors.top: root.top}
             }
         ]
 
@@ -147,19 +160,12 @@ Window {
             Transition {
                 from: ""
                 to: "ADDSTATE"
-                AnchorAnimation {
-                    duration: 300
-                    easing.type: Easing.InQuad
-                }
+                AnchorAnimation {duration: 300; easing.type: Easing.InQuad}
             },
             Transition {
                 from: "ADDSTATE"
                 to: ""
-                AnchorAnimation {
-                    duration: 300
-                    easing.type: Easing.OutBack
-                }
-
+                AnchorAnimation {duration: 300; easing.type: Easing.OutBack}
             }
         ]
     }
