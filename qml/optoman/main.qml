@@ -76,6 +76,7 @@ Window {
                 anchors.fill: parent
                 property int w: parent.width
                 property int h: parent.height / 7
+                property bool rtl: false
                 model: patientmodel
                 clip: true
                 delegate: PatientInfoDelegate {
@@ -90,8 +91,8 @@ Window {
                     phoneText: phone
                     leftEyeText: leftEyeSph + "  " + leftEyeCyl + " @" + leftEyeAx
                     rightEyeText: rightEyeSph + "  " + rightEyeCyl + " @" + rightEyeAx
-//                    lensTypeText: lensType
-//                    detailText: detail
+                    lensTypeText: lensType
+                    detailText: detail
                 }
             }
 
@@ -147,6 +148,18 @@ Window {
                 hide()
             }
             onRejected: hide()
+        }
+
+        Item{
+            // Temp Item for testing RTL direction.
+            width: parent.width * 0.1
+            height: width
+            anchors.left: parent.left
+            anchors.bottom: parent.bottom
+            MouseArea{
+                anchors.fill: parent
+                onPressAndHold: mainView.rtl=!mainView.rtl
+            }
         }
 
         states: [

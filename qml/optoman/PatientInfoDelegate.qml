@@ -1,26 +1,32 @@
 import QtQuick 2.1
 
 Image{
-    source: itemMouseArea.pressed?"img/itemBack_Pressed.png" :"img/itemBack.png"
+    id: root
+    source:"img/itemBack.png"
     property alias nameText: namePlaceText.text
     property alias phoneText: phonePlaceText.text
     property alias leftEyeText: leftEyePlaceText.text
     property alias rightEyeText: rightEyePlaceText.text
-//    property alias lensTypeText: lensTypePlaceText.text
-//    property alias detailText: detailPlaceText.text
+    property string lensTypeText: ""
+    property alias detailText: detailPlaceText.text
     property alias dayValue: dayText.text
     property alias monthValue: monthText.text
     property alias yearValue: yearText.text
 
     property int fontSize: width * 0.04
-
-//    LayoutMirroring.enabled: true
-//    LayoutMirroring.childrenInherit: true
+    property int rowHeight: ListView.view.h / 2
+    property int test: ListView.view.h
+    LayoutMirroring.enabled: ListView.view.rtl
+    LayoutMirroring.childrenInherit: true
     MouseArea{
         id: itemMouseArea
         anchors.fill: parent
         onPressAndHold: confirmationDialog.show(ID)
+        onClicked: {
+            root.state = (root.state === "EXPAND")? "" :"EXPAND"
+        }
     }
+
     Column {
         id: datePlace
         anchors.right: parent.right
@@ -36,7 +42,7 @@ Image{
                 id: dayText
 //                text: qsTr("23")
                 anchors.centerIn: parent
-                font.pixelSize: dayPlace.height / 1.3
+                font.pixelSize: fontSize * 1.2
                 font.bold: true
             }
         }
@@ -50,7 +56,7 @@ Image{
                 id: monthText
 //                text: qsTr("12")
                 anchors.centerIn: parent
-                font.pixelSize: monthPlace.height / 1.3
+                font.pixelSize: fontSize * 1.2
                 font.bold: true
             }
         }
@@ -65,7 +71,7 @@ Image{
                 id: yearText
 //                text: qsTr("1365")
                 anchors.centerIn: parent
-                font.pixelSize: yearPlace.height / 1.8
+                font.pixelSize: fontSize
                 font.bold: true
             }
         }
@@ -78,7 +84,7 @@ Image{
             right: datePlace.left
             top: parent.top
         }
-        height: parent.height / 2
+        height: rowHeight
 
         Item {
             id: namePlace
@@ -126,7 +132,7 @@ Image{
             right: datePlace.left
             top: patientPersonalInfoPlace.bottom
         }
-        height: parent.height / 2
+        height: rowHeight
 
         Item{
             id: leftEyePlace
@@ -164,41 +170,66 @@ Image{
 
     }
 
-//    Item {
-//        id: typeAndDetailPlace
-//        anchors {
-//            left: parent.left
-//            right: parent.right
-//            top: eyeInfoPlace.bottom
-//            bottom: parent.bottom
-//        }
-////        height: parent.height / 4
-//        Item {
-//            id: lensTypePlace
-//            anchors {
-//                top: parent.top
-//                bottom: parent.bottom
-//                left: parent.left
-//            }
-//            width: parent.width / 2
-//            Text {
-//                id: lensTypePlaceText
-//                anchors.centerIn: parent
-//            }
-//        }
+    Item {
+        id: typePlace
+        opacity: 0
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: eyeInfoPlace.bottom
+        }
+        height: lensTypePlaceText.text===""? 0 :rowHeight * 0.7
 
-//        Item {
-//            id: detailPlace
-//            anchors {
-//                top: parent.top
-//                bottom: parent.bottom
-//                left: lensTypePlace.right
-//                right: parent.right
-//            }
-//            Text {
-//                id: detailPlaceText
-//                anchors.centerIn: parent
-//            }
-//        }
-//    }
+        Text {
+            id: lensTypePlaceText
+            text: lensTypeText === ""? "" :"Lens Type: " + lensTypeText
+            font.italic: true
+            anchors.left: parent.left
+            anchors.leftMargin: namePlaceText.anchors.leftMargin
+        }
+    }
+
+    Item {
+        id: detailPlace
+        opacity: 0
+        anchors {
+            left: parent.left
+            right: datePlace.left
+            top: typePlace.bottom
+            leftMargin: namePlaceText.anchors.leftMargin
+            rightMargin: anchors.leftMargin
+        }
+        height: detailPlaceText.text===""? 0 :detailPlaceText.implicitHeight + anchors.leftMargin
+        Text {
+            id: detailPlaceText
+            wrapMode: Text.WordWrap
+            anchors.left: parent.left
+            anchors.right: parent.right
+            font.italic: true
+            horizontalAlignment: Text.AlignJustify
+        }
+    }
+
+    Rectangle{              //Dim layer
+        color: "black"
+        opacity: 0.2
+        visible: itemMouseArea.pressed? true :false
+        anchors.fill: parent
+    }
+
+    states: [
+        State {
+            name: "EXPAND"
+            PropertyChanges {target: root; height:patientPersonalInfoPlace.height + eyeInfoPlace.height + typePlace.height + detailPlace.height}
+            PropertyChanges {target: typePlace; opacity:1}
+            PropertyChanges {target: detailPlace; opacity:1}
+        }
+    ]
+    transitions: [
+        Transition {
+            NumberAnimation{properties: "height, opacity";duration: 100; easing.type: Easing.InOutExpo}
+        }
+    ]
+
+
 }
