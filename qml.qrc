@@ -20,5 +20,9 @@
         <file>qml/optoman/ConfirmationDialog.qml</file>
         <file>qml/optoman/img/trash.png</file>
         <file>qml/optoman/img/itemBack_Pressed.png</file>
+        <file>qml/optoman/Yekan.ttf</file>
+        <file>qml/optoman/img/arrow.png</file>
+        <file>qml/optoman/img/ok.png</file>
+        <file>qml/optoman/MessageLine.qml</file>
     </qresource>
 </RCC>

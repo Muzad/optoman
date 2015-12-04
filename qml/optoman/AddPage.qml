@@ -4,71 +4,64 @@ import QtQuick.Controls 1.4
 
 import "control" as EyeControl
 
-Item {
+Rectangle {
     id:addPageRoot
     width: 350
     height: 550
 
-    function clear(){
-        customerName.text = customerPhone.text = lensType.text = detailArea.text = ""
-        leftEye.reset()
-        rightEye.reset()
-    }
-
-    Image {
-        source: "img/background.png"
+    MouseArea{
         anchors.fill: parent
-        MouseArea{
-            anchors.fill: parent
-            onClicked: hideVirtualKeyboard()
-        }
+        onClicked: hideVirtualKeyboard()
     }
 
-    Item {
+    Rectangle {
         id: topBar
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
         height: parent.height / 9
+        color: "#3498DB"
 
-
-        Image {
-            id: name
-            anchors.fill: parent
-            source: "img/toolBar.png"
-        }
         MouseArea{
             anchors.fill: parent
             onClicked: hideVirtualKeyboard()
         }
 
-        Image {
+        Item {
             id: backButton
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.leftMargin: 15
+            height: parent.height
+            width: height
             anchors.left: parent.left
-            smooth: true
-            width: height * 1.5
-            height: parent.height/ 1.4
-            source: "img/back.png"
+
+            Image{
+                anchors.centerIn: parent
+                smooth: true
+                height: parent.height * 0.35
+                fillMode: Image.PreserveAspectFit
+                source: "img/back.png"
+            }
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
                     hideVirtualKeyboard()
                     DBMAN.reloadModel()
-                    root.state = ""
+                    addPageRoot.hide()
                 }
             }
         }
-        Image {
-            id: saveButton
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.rightMargin: 15
+
+        Item{
+            height: parent.height
+            width: height
             anchors.right: parent.right
-            smooth: true
-            width: height * 1.5
-            height: parent.height/ 1.4
-            source: "img/done.png"
+            Image {
+                id: saveButton
+                anchors.centerIn: parent
+                smooth: true
+                height: parent.height * 0.5
+                fillMode: Image.PreserveAspectFit
+                source: "img/ok.png"
+            }
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
@@ -78,7 +71,7 @@ Item {
                                   rightEye.sphValue(), rightEye.cylValue(), rightEye.axValue(),
                                   lensType.text, detailArea.text, false)
                     DBMAN.reloadModel()
-                    root.state = ""
+                    addPageRoot.hide()
                 }
             }
         }
@@ -111,6 +104,7 @@ Item {
             inputMethodHints: Qt.ImhDigitsOnly
             placeholderText: "Phone"
             anchors.horizontalCenter: parent.horizontalCenter
+            maximumLength: 11
         }
 
         TextField {
@@ -164,4 +158,39 @@ Item {
             }
         }
     }
+
+    function clear(){
+        customerName.text = customerPhone.text = lensType.text = detailArea.text = ""
+        leftEye.reset()
+        rightEye.reset()
+    }
+
+    function show(){
+        addPageRoot.clear()
+        addPageRoot.state = "SHOW"
+        openPagesList.push(this)
+    }
+
+    function hide(){
+        addPageRoot.state = ""
+        openPagesList.pop()
+    }
+
+    states: [
+        State {
+            name: "SHOW"
+            AnchorChanges {target: addPageRoot; anchors.left: root.left}
+            PropertyChanges {target: addPageRoot; opacity: 1}
+        }
+    ]
+
+    transitions : [
+        Transition {
+            from: ""
+            to: "SHOW"
+            reversible: true
+            AnchorAnimation {duration: 300; easing.type: Easing.InOutExpo}
+            PropertyAnimation{property: "opacity"; duration: 250}
+        }
+    ]
 }

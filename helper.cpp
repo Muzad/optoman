@@ -19,3 +19,9 @@ QString Helper::gregorianToJalali(QString dateTime)
     return date+" "+time;
 }
 
+QString Helper::currentJalaliYear()
+{
+    Jalali jCalender;
+    return jCalender.currentDate().section ("/",0,0);
+}
+

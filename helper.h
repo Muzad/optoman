@@ -11,6 +11,7 @@ public:
 
 public slots:
     QString gregorianToJalali(QString dateTime);
+    QString currentJalaliYear();
 
 signals:
 

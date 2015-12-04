@@ -4,10 +4,15 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtGraphicalEffects 1.0
 
-Window {
+Window{
+    id: mainWindow
     visible: true
-    width: 350
-    height: 550
+    width: 400
+    height: 640
+    FontLoader { id:yekanFontFamily; source: "Yekan.ttf"}
+
+    property var openPagesList: []
+    property bool rtl: true
 
     function hideVirtualKeyboard(){
         Qt.inputMethod.hide();
@@ -38,7 +43,7 @@ Window {
                 anchors.left: searchImg.right
                 anchors.right: parent.right
                 anchors.rightMargin: 15
-                placeholderText: "Search By Name"
+                placeholderText: "Search"
                 font.pixelSize: 18
                 inputMethodHints: Qt.ImhNoPredictiveText
                 onTextChanged: DBMAN.reloadModel(searchField.text,searchField.text)
@@ -69,14 +74,17 @@ Window {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom
-            color: "orange"
+//            color: "orange"
 
             ListView {
                 id: mainView
                 anchors.fill: parent
                 property int w: parent.width
                 property int h: parent.height / 7
-                property bool rtl: false
+
+                LayoutMirroring.enabled: mainWindow.rtl
+                LayoutMirroring.childrenInherit: true
+
                 model: patientmodel
                 clip: true
                 delegate: PatientInfoDelegate {
@@ -89,8 +97,10 @@ Window {
 
                     nameText: name
                     phoneText: phone
-                    leftEyeText: leftEyeSph + "  " + leftEyeCyl + " @" + leftEyeAx
-                    rightEyeText: rightEyeSph + "  " + rightEyeCyl + " @" + rightEyeAx
+                    leftEyeText: !mainWindow.rtl? leftEyeSph + "  " + leftEyeCyl + " @" + leftEyeAx
+                                          : rightEyeSph + "  " + rightEyeCyl + " @" + rightEyeAx
+                    rightEyeText: !mainWindow.rtl? rightEyeSph + "  " + rightEyeCyl + " @" + rightEyeAx
+                                           : leftEyeSph + "  " + leftEyeCyl + " @" + leftEyeAx
                     lensTypeText: lensType
                     detailText: detail
                 }
@@ -102,7 +112,7 @@ Window {
                 anchors.right: parent.right
                 anchors.margins: width / 2.7
                 color: "#3498DB"
-                width: parent.width * 0.2
+                width: parent.width * 0.18
                 height: width
                 radius: width/2
                 Image {
@@ -113,10 +123,7 @@ Window {
 
                 MouseArea {
                     anchors.fill: parent
-                    onClicked: {
-                        addpage.clear()
-                        root.state = "ADDSTATE"
-                    }
+                    onClicked: addpage.show()
                 }
             }
 
@@ -129,14 +136,14 @@ Window {
                 samples: 30
                 color: "#50000000"
             }
-
         }
 
         AddPage {
             id: addpage
-            anchors.top : root.bottom
+            anchors.left : root.right
             width: parent.width
             height: parent.height
+            opacity: 0
         }
 
         ConfirmationDialog{
@@ -150,36 +157,39 @@ Window {
             onRejected: hide()
         }
 
-        Item{
-            // Temp Item for testing RTL direction.
-            width: parent.width * 0.1
-            height: width
-            anchors.left: parent.left
-            anchors.bottom: parent.bottom
-            MouseArea{
-                anchors.fill: parent
-                onPressAndHold: mainView.rtl=!mainView.rtl
-            }
+//        Item{
+//            // Temp Item for testing RTL direction.
+//            width: parent.width * 0.1
+//            height: width
+//            anchors.left: parent.left
+//            anchors.bottom: parent.bottom
+//            MouseArea{
+//                anchors.fill: parent
+//                onPressAndHold: mainWindow.rtl=!mainWindow.rtl
+//            }
+//        }
+
+        MessageLine{
+            id: messageLine
         }
 
-        states: [
-            State {
-                name: "ADDSTATE"
-                AnchorChanges {target: addpage; anchors.top: root.top}
-            }
-        ]
+        focus: true
+        Keys.onReleased: {
+            if (event.key === Qt.Key_Back)
+            {
+                print("-->",openPagesList)
+                if(openPagesList.length === 0){     // back in the main window
+                    if (messageLine.visible)
+                        Qt.quit()
+                    else
+                        messageLine.show(qsTr("Press again to exit"))
+                }
+                else{
+                    openPagesList[openPagesList.length-1].hide()
+                }
 
-        transitions : [
-            Transition {
-                from: ""
-                to: "ADDSTATE"
-                AnchorAnimation {duration: 300; easing.type: Easing.InQuad}
-            },
-            Transition {
-                from: "ADDSTATE"
-                to: ""
-                AnchorAnimation {duration: 300; easing.type: Easing.OutBack}
+                event.accepted = true
             }
-        ]
+        }
     }
 }

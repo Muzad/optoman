@@ -1,23 +1,21 @@
 import QtQuick 2.1
 
-Image{
+Item{
     id: root
-    source:"img/itemBack.png"
-    property alias nameText: namePlaceText.text
-    property alias phoneText: phonePlaceText.text
-    property alias leftEyeText: leftEyePlaceText.text
-    property alias rightEyeText: rightEyePlaceText.text
+    property string nameText: ""
+    property string phoneText: ""
+    property string leftEyeText: ""
+    property string rightEyeText: ""
     property string lensTypeText: ""
     property alias detailText: detailPlaceText.text
-    property alias dayValue: dayText.text
-    property alias monthValue: monthText.text
-    property alias yearValue: yearText.text
+    property string dayValue: ""
+    property string monthValue: ""
+    property string yearValue: ""
 
+    property var fontFamily: mainWindow.rtl? yekanFontFamily.name :"Arial"
     property int fontSize: width * 0.04
     property int rowHeight: ListView.view.h / 2
-    property int test: ListView.view.h
-    LayoutMirroring.enabled: ListView.view.rtl
-    LayoutMirroring.childrenInherit: true
+
     MouseArea{
         id: itemMouseArea
         anchors.fill: parent
@@ -27,147 +25,95 @@ Image{
         }
     }
 
-    Column {
-        id: datePlace
-        anchors.right: parent.right
-        width: parent.width / 8
-        height: parent.height
-
-        Rectangle {
-            id: dayPlace
-            width: parent.width
-            height: parent.height / 3
-            color: "red"
-            Text {
-                id: dayText
-//                text: qsTr("23")
-                anchors.centerIn: parent
-                font.pixelSize: fontSize * 1.2
-                font.bold: true
-            }
-        }
-
-        Rectangle {
-            id: monthPlace
-            width: parent.width
-            height: parent.height / 3
-            color: "green"
-            Text {
-                id: monthText
-//                text: qsTr("12")
-                anchors.centerIn: parent
-                font.pixelSize: fontSize * 1.2
-                font.bold: true
-            }
-        }
-
-        Rectangle {
-            id: yearPlace
-            width: parent.width
-            height: parent.height / 3
-            color: "blue"
-
-            Text {
-                id: yearText
-//                text: qsTr("1365")
-                anchors.centerIn: parent
-                font.pixelSize: fontSize
-                font.bold: true
-            }
-        }
-    }
-
     Item {
         id: patientPersonalInfoPlace
         anchors {
             left: parent.left
-            right: datePlace.left
+            right: parent.right
             top: parent.top
         }
         height: rowHeight
 
-        Item {
-            id: namePlace
-            anchors {
-                top: parent.top
-                bottom: parent.bottom
-                left: parent.left
-                right: parent.horizontalCenter
-            }
-            Text {
-                id: namePlaceText
-//                anchors.verticalCenter: parent.verticalCenter
-                anchors.bottom: parent.bottom
-                anchors.left: parent.left
-                anchors.leftMargin: parent.width * 0.1
-                font.pixelSize: fontSize * 1.2
-                font.bold: true
-                font.italic: true
-            }
+        Text {
+            id: namePlaceText
+            anchors.left: parent.left
+            anchors.leftMargin: parent.width * 0.05
+            anchors.bottom: parent.bottom
+            width: parent.width * 0.35
+            horizontalAlignment: mainWindow.rtl? Text.AlignLeft :Text.AlignRight
+            font.pixelSize: fontSize * 1.2
+            font.bold: true
+            font.family: root.fontFamily
+            text: nameText
+            clip: true
         }
 
-        Item {
+        Text{
             id: phonePlace
-            anchors {
-                top: parent.top
-                bottom: parent.bottom
-                left: parent.horizontalCenter
-                right: parent.right
-            }
-            Text {
-                id: phonePlaceText
-//                anchors.verticalCenter: parent.verticalCenter
-                anchors.bottom: parent.bottom
-                anchors.left: parent.left
-                anchors.leftMargin: namePlaceText.anchors.leftMargin
-                font.pixelSize: fontSize
-            }
+            font.family: root.fontFamily
+            text: phoneText!==""? "(" + phoneText + ")" :""
+            anchors.left: namePlaceText.right
+            anchors.leftMargin: parent.width * 0.04
+            anchors.bottom: parent.bottom
+            font.italic: true
+        }
+
+        Text {
+            id: datePlaceText
+            anchors.right: parent.right
+            anchors.rightMargin: parent.width * 0.05
+            text: (yearValue !== helper.currentJalaliYear())?
+                      yearValue.substring(2) + "/" + monthValue + "/" + dayValue
+                    : monthValue + "/" + dayValue
+            anchors.bottom: parent.bottom
+            font.pixelSize: fontSize
+            color: "gray"
         }
     }
 
-    Item {
+    Item{
         id: eyeInfoPlace
         anchors {
             left: parent.left
-            right: datePlace.left
+            right: parent.right
             top: patientPersonalInfoPlace.bottom
         }
         height: rowHeight
 
-        Item{
-            id: leftEyePlace
-            anchors {
-                left: parent.left
-                right: parent.horizontalCenter
-                bottom: parent.bottom
-                top: parent.top
-            }
-            Text {
-                id: leftEyePlaceText
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                anchors.leftMargin: namePlaceText.anchors.leftMargin
-                font.pixelSize: fontSize
-            }
+        Image {
+            id: arrowImage
+            source: "img/arrow.png"
+            height: parent.height * 0.4
+            fillMode: Image.PreserveAspectFit
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: parent.left
+            anchors.leftMargin: namePlaceText.anchors.leftMargin * 1.2
+            mirror: LayoutMirroring.enabled? true :false
         }
-
-        Item{
-            id: rightEyePlace
-            anchors {
-                left: leftEyePlace.right
-                right: parent.right
-                bottom: parent.bottom
-                top: parent.top
-            }
-            Text {
-                id: rightEyePlaceText
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.left: parent.left
-                anchors.leftMargin: namePlaceText.anchors.leftMargin
-                font.pixelSize: fontSize
-            }
+        Text {
+            id: leftEyePlaceText
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: arrowImage.right
+            anchors.leftMargin: namePlaceText.anchors.leftMargin * 0.5
+            font.pixelSize: fontSize
+            text: leftEyeText
         }
+        Text {
+            id: rightEyePlaceText
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: leftEyePlaceText.right
+            anchors.leftMargin: namePlaceText.anchors.leftMargin
+            font.pixelSize: fontSize
+            text: rightEyeText
+        }
+    }
 
+    Rectangle{
+        id: itemsSeparator
+        width: parent.width
+        height: 1
+        color: "gray"
+        anchors.top: root.bottom
     }
 
     Item {
@@ -182,8 +128,9 @@ Image{
 
         Text {
             id: lensTypePlaceText
-            text: lensTypeText === ""? "" :"Lens Type: " + lensTypeText
+            text: /*lensTypeText === ""? "" :"Lens Type: " + */lensTypeText
             font.italic: true
+            font.family: root.fontFamily
             anchors.left: parent.left
             anchors.leftMargin: namePlaceText.anchors.leftMargin
         }
@@ -194,25 +141,26 @@ Image{
         opacity: 0
         anchors {
             left: parent.left
-            right: datePlace.left
+            right: parent.right
             top: typePlace.bottom
             leftMargin: namePlaceText.anchors.leftMargin
             rightMargin: anchors.leftMargin
         }
-        height: detailPlaceText.text===""? 0 :detailPlaceText.implicitHeight + anchors.leftMargin
+        height: detailPlaceText.text===""? anchors.leftMargin/2 :detailPlaceText.implicitHeight + anchors.leftMargin/2
         Text {
             id: detailPlaceText
             wrapMode: Text.WordWrap
             anchors.left: parent.left
             anchors.right: parent.right
             font.italic: true
+            font.family: root.fontFamily
             horizontalAlignment: Text.AlignJustify
         }
     }
 
     Rectangle{              //Dim layer
         color: "black"
-        opacity: 0.2
+        opacity: 0.1
         visible: itemMouseArea.pressed? true :false
         anchors.fill: parent
     }
@@ -230,6 +178,4 @@ Image{
             NumberAnimation{properties: "height, opacity";duration: 100; easing.type: Easing.InOutExpo}
         }
     ]
-
-
 }
